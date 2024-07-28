@@ -11,10 +11,6 @@ type PokemonEncounter struct {
 	Pokemon Pokemon `json:"pokemon"`
 }
 
-type Pokemon struct {
-	Name string `json:"name"`
-}
-
 func (client PokeapiClient) GetLocationAreas(page int) ([]LocationArea, error) {
 	path := client.prepareUrl("/location-area", page)
 
@@ -40,8 +36,9 @@ func (client PokeapiClient) GetLocationAreaPokemons(locationArea string) (Locati
 	path := fmt.Sprintf("/location-area/%s", locationArea)
 	path = client.prepareUrl(path, 0)
 
-	body, found := client.Cache.Get(path)
 	var la LocationArea
+	body, found := client.Cache.Get(path)
+
 	if !found {
 		res, err := client.get(path)
 		if err != nil {
@@ -50,10 +47,11 @@ func (client PokeapiClient) GetLocationAreaPokemons(locationArea string) (Locati
 		body = res
 		client.Cache.Add(path, body)
 	}
-	out, err := parseResponse[LocationArea](body)
+
+	la, err := parseResponse[LocationArea](body)
 	if err != nil {
 		return la, err
 	}
 
-	return out, nil
+	return la, nil
 }

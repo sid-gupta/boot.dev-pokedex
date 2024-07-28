@@ -25,5 +25,14 @@ func GetPokedexCommands(p *Pokedex) map[string]Command {
 		"explore": {Name: "explore", Desc: "Explore an area. Usage 'explore [area-name]'", Handler: func(args ...string) error {
 			return p.explore(args...)
 		}},
+		"catch": {Name: "catch", Desc: "Try to catch a pokemon. Usage 'catch [pokemon-name]'", Handler: func(args ...string) error {
+			return p.catch(args...)
+		}},
+		"inspect": {Name: "inspect", Desc: "Inspect a caught pokemon. Usage 'inspect [pokemon-name]'", Handler: func(args ...string) error {
+			return p.inspect(args...)
+		}},
+		"pokedex": {Name: "pokedex", Desc: "Prints pokemon caught by the user", Handler: func(args ...string) error {
+			return p.pokedex(args...)
+		}},
 	}
 }

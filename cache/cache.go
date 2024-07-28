@@ -1,7 +1,6 @@
 package cache
 
 import (
-	"fmt"
 	"sync"
 	"time"
 )
@@ -63,7 +62,7 @@ func (c *ExpiringCache[T]) reapLoop() {
 		for k, v := range c.cache {
 			expiry := v.createdAt.Add(c.ttl)
 			if expiry.Before(now) {
-				fmt.Printf("\nReaping: %s", k)
+				//fmt.Printf("\nReaping: %s", k)
 				delete(c.cache, k)
 			}
 		}
